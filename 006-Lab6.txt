@@ -1,0 +1,11 @@
+kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.4 --port=8080
+
+verification:
+-------------
+kubectl get pods
+kubectl get node
+
+kubectl describe pod hello-minikube-78c9fc5f89-gdvg6   
+
+//Expose the port to the HOST
+kubectl expose deployment hello-minikube --type=NodePort  

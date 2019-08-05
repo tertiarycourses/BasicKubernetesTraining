@@ -1,0 +1,13 @@
+docker create image... FROM(PULL+RUN)  
+ docker create image command CMD
+ COPY, RUN, and more... 
+ 
+ FROM busybox
+ COPY ./my-static-binary /my-static-binary
+ CMD ["ping","8.8.8.8"]
+
+ docker build .
+ 
+ 
+ Verification:
+ docker image ls

@@ -1,0 +1,10 @@
+apt-get update
+apt install docker.io
+
+#Deploy Container
+root@ip-172-31-23-240:/home/ubuntu# docker --version
+Docker version 18.09.5, build e8ff056
+
+docker --help
+docker search ubuntu
+//Search ubuntu

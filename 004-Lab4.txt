@@ -1,0 +1,6 @@
+docker run -itd --name=Busy1 busybox
+
+docker attach Busy1
+--------------------
+ping 8.8.8.8
+ifconfig -a
