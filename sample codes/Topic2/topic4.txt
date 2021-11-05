@@ -1,0 +1,49 @@
+# Activity:  Labels and Selector
+kubectl apply -f sample-infrastructure-with-labels.yml
+kubectl get pods
+kubectl get pods --show-labels
+kubectl get pods --selector env=production
+kubectl get pods --selector dev-lead=karthik
+
+# Activity:  Handle Application Upgrad
+kubectl apply -f helloworld-black.yaml --record
+kubectl get pods
+http://localhost:32454/
+kubectl set image deployment/navbar-deployment helloworld=karthequian/helloworld:blue
+http://localhost:32454/
+kubectl rollout history deployment/navbar-deployment
+kubectl rollout undo deployment/navbar-deployment
+http://localhost:32454/
+
+
+# Deploying PHP Guestbook Application with Redis
+
+## Start Up a Redis Leader
+kubectl apply -f redis-leader-deployment.yaml
+kubectl get pods
+kubectl apply -f redis-leader-service.yaml
+kubectl get service
+
+## Start Up a Redis Follower
+kubectl apply -f redis-follower-deployment.yaml
+kubectl get pods
+kubectl apply -f redis-followe-service.yaml
+kubectl get service
+
+## Set up and Expose the Guestbook Frontend
+kubectl apply -f frontend-deployment.yaml
+kubectl get pods -l app=guestbook -l tier=frontend
+
+## Creating the Redis Deployment
+kubectl apply -f frontend-service.yaml
+kubectl get services
+kubectl port-forward svc/frontend 8080:80
+http://localhost:8080
+
+## Scale the Web Frontend
+kubectl scale deployment frontend --replicas=5
+kubectl get pods
+
+## Scale Down the Web Frontend 
+kubectl scale deployment frontend --replicas=2
+kubectl get pods

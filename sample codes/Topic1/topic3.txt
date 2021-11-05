@@ -1,0 +1,99 @@
+# Deploy Kubernetes
+kubectl config get-contexts
+kubectl config use-context docker-desktop
+
+# Activity: Deploy Pod on Kubernetes
+kubectl apply -f pod.yaml
+kubectl get nodes
+kubectl get pods
+kubectl delete -f pod.yaml
+
+# Activity: Command
+kubectl apply -f pod.yaml
+kubectl get nodes
+kubectl get pods
+kubectl logs demo
+kubectl delete -f pod.yaml
+
+Activity:  Service and Deployment
+kubectl apply -f bb.yaml
+kubectl get deployments
+kubectl get services
+kubectl delete -f bb.yaml
+
+# Install Kubernetes
+If there is error 
+rm '/usr/local/bin/kubectl'
+brew install kubernetes-cli
+brew link kubernetes-cli
+
+# Activity: Launch Single Node Kubernetes Cluster
+
+## Step 1 - Start Minikube
+minikube version
+minikube start --wait=false
+
+## Step 2 - Cluster Info
+kubectl cluster-info
+kubectl get nodes
+
+## Step 3 - Deploy Containers
+kubectl create deployment first-deployment --image=katacoda/docker-http-server
+kubectl get pods
+kubectl expose deployment first-deployment --port=80 --type=NodePort
+export PORT=$(kubectl get svc first-deployment -o go-template='{{range.spec.ports}}{{if .nodePort}}{{.nodePort}}{{"\n"}}{{end}}{{end}}')
+$ echo "Accessing host01:$PORT" 
+curl host01:$PORT
+
+## Step 4 - Dashboard
+minikube addons enable dashboard
+kubectl apply -f /opt/kubernetes-dashboard.yaml
+kubectl get pods -n kubernetes-dashboard -w
+
+Once running, the URL to the dashboard is https://[[HOST_SUBDOMAIN]]-30000-[[KATACODA_HOST]].environments.katacoda.com/
+
+# Activity: Deploy Containers Using Kubectl
+## Step 1 - Launch Cluster
+minikube start --wait=false
+kubectl get nodes
+
+## Step 2 - Kubectl Run
+kubectl run http --image=katacoda/docker-http-server:latest --replicas=1
+kubectl get deployments
+kubectl describe deployment http
+
+## Step 3 - Kubectl Expose
+kubectl expose deployment http --external-ip="172.17.0.56" --port=8000 --target-port=80
+curl http://172.17.0.56:8000
+
+## Step 4 - Kubectl Run and Expose
+kubectl run httpexposed --image=katacoda/docker-http-server:latest --replicas=1 --port=80 --hostport=8001
+curl http://172.17.0.56:8001
+kubectl get svc
+docker ps | grep httpexposed
+
+## Step 5 - Scale Containers
+kubectl scale --replicas=3 deployment http
+kubectl get pods
+kubectl describe svc http
+curl http://172.17.0.56:8000
+
+
+# Activity: Deploy Containers Using YAML
+
+## Step 1 - Create Deployment
+kubectl create -f deployment.yaml
+kubectl get deployment
+kubectl describe deployment webapp1
+
+## Step 2 - Create Service
+kubectl create -f service.yaml
+kubectl get svc
+kubectl describe svc webapp1-svc
+curl host01:30080
+
+## Step 3 - Scale Deployment
+kubectl apply -f deployment.yaml
+kubectl get deployment
+kubectl get pods
+kubectl get deployment
