@@ -1,5 +1,5 @@
 # Kubernetes Essential Training
-## by [Tertiary Infotech Pte. Ltd](https://www.tertiarycourses.com.sg/)
+## by [Tertiary Courses](https://www.tertiarycourses.com.sg/)
 
 These are the exercise files used for [Kubernetes Essential Training](https://www.tertiarycourses.com.sg/kubernetes-essential-training.html) course. 
 
